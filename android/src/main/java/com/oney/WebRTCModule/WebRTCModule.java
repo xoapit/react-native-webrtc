@@ -1010,27 +1010,3 @@ public class WebRTCModule extends ReactContextBaseJavaModule {
         }
     }
 }
-
-annelId,
-                                String data,
-                                String type) {
-        ThreadUtils.runOnExecutor(() ->
-            dataChannelSendAsync(peerConnectionId, dataChannelId, data, type));
-    }
-
-    private void dataChannelSendAsync(int peerConnectionId,
-                                      int dataChannelId,
-                                      String data,
-                                      String type) {
-        // Forward to PeerConnectionObserver which deals with DataChannels
-        // because DataChannel is owned by PeerConnection.
-        PeerConnectionObserver pco
-            = mPeerConnectionObservers.get(peerConnectionId);
-        if (pco == null || pco.getPeerConnection() == null) {
-            Log.d(TAG, "dataChannelSend() peerConnection is null");
-        } else {
-            pco.dataChannelSend(dataChannelId, data, type);
-        }
-    }
-}
-
